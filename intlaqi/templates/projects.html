@@ -4,5 +4,36 @@
 <title>Projects</title>
 {% endblock %}
 {% block content %} <!-- embedded python tag -->
-<h1>Projects</h1>
+<div class="title">
+    <h1>Projects</h1>
+</div>
+<div class="body" style="margin-top: 50px;">
+    <div class="row">
+        <div class="col" style="padding: 10px; margin: 10px; border: 1px; border-style: solid; border-radius: 5px; border-color:dimgray;">
+            <div class="projectname" style="text-align: center;">
+                <a href="{% url 'intl_aqi' %}"><h4>International Air Quality Index</h4></a>
+            </div>
+            <div class="description" style="text-align: justify;">
+                Displays the AQI for a requested city. Uses data from <a href="https://aqicn.org/" style="color: black"><em>The World Air Quality Project</em></a>. Created using HTML, Django, and Python.
+            </div>
+        </div>
+        <div class="col" style="padding: 10px; margin: 10px; border: 1px; border-style: solid; border-radius: 5px; border-color:dimgray; visibility: hidden;">
+            <div class="projectname" style="text-align: center;">
+                <a href="#"><h4>Project 2</h4></a>
+            </div>
+            <div class="description" style="text-align: justify;">
+                Description
+            </div>
+        </div>
+        <div class="col" style="padding: 10px; margin: 10px; border: 1px; border-style: solid; border-radius: 5px; border-color:dimgray; visibility: hidden;">
+            <div class="projectname" style="text-align: center;">
+                <a href="#"><h4>Project 3</h4></a>
+            </div>
+            <div class="description" style="text-align: justify;">
+                Description
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
