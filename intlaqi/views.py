@@ -11,11 +11,23 @@ def intl_aqi(request):
     import json
     import requests
 
-    api_req = requests.get("https://api.waqi.info/feed/makati/?token=7b8cc61eb74aee354c5818dfce380d7c9a3ca765")
+    if request.method == "POST":
+        city = request.POST['city']
+        api_req = requests.get("https://api.waqi.info/feed/" + city + "/?token=7b8cc61eb74aee354c5818dfce380d7c9a3ca765")
 
-    try:
-        api = json.loads(api_req.content)
-    except Exception as e:
-        api = "Error: No data"
+        try:
+            api = json.loads(api_req.content)
+        except Exception as e:
+            api = "Error: No data"
 
-    return render(request, 'intl_aqi.html', {'api' : api })
+        return render(request, 'intl_aqi.html', {'api' : api })
+        
+    else:        
+        api_req = requests.get("https://api.waqi.info/feed/santa%20rosa/?token=7b8cc61eb74aee354c5818dfce380d7c9a3ca765")
+
+        try:
+            api = json.loads(api_req.content)
+        except Exception as e:
+            api = "Error: No data"
+
+        return render(request, 'intl_aqi.html', {'api' : api })

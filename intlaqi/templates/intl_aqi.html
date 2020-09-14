@@ -5,18 +5,63 @@
 {% endblock %}
 
 {% block content %} <!-- embedded python tag -->
-<div class="title">
-    <h1>International Air Quality Index</h1>
-</div>
-<div>
-    <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="City" aria-label="Search">
-        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Enter</button>
-    </form>
-</div>
-<div>
-    {{ api.data }}<br><br>
-    {{ api.data.iaqi }}
-    
-</div>
+    <div class="title" style="text-align: center;">
+        <h1>International Air Quality Index</h1>
+    </div>
+    <div>
+        <form action="{% url 'intl_aqi' %}" class="form-inline my-2 my-lg-0" method="POST">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2" type="search" placeholder="Enter City" aria-label="Search" name="city">
+            <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Lookup</button>
+        </form>
+    </div>
+
+    {% if city %}
+        {{ city }}
+    {% endif %}
+
+    <div style="margin-top: 10px">
+        <!-- {{ api.data.iaqi }} -->
+        <div class="row">
+            <div class="col">
+                <div class="location">
+                    <div class="row">
+                        <h3>{{ api.data.city.name }}</h3>
+                    </div>
+                </div>
+                <div class="data" style="margin-top: 10px;">
+                    <div class="row aqi_score" style="align-content: center;">
+                        <h1>AQI: {{ api.data.aqi }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="row" style="border: 1px; border-style: solid; padding: 5px">
+                    <p>O<sub>3</sub> : {{ api.data.iaqi.o3.v }}</p>
+                </div>
+                <div class="row" style="border: 1px; border-style: solid; padding: 5px">
+                    <p>NO<sub>2</sub> : {{ api.data.iaqi.no2.v }}</p> 
+                </div>
+                <div class="row" style="border: 1px; border-style: solid; padding: 5px">
+                    <p>SO<sub>2</sub> : {{ api.data.iaqi.so2.v }}</p> 
+                </div>
+                <div class="row" style="border: 1px; border-style: solid; padding: 5px">
+                    <p>CO : {{ api.data.iaqi.co.v }}</p> 
+                </div>
+                <div class="row" style="border: 1px; border-style: solid; padding: 5px">
+                    <p>Temperature : {{ api.data.iaqi.t.v }}</p> 
+                </div>
+                <div class="row" style="border: 1px; border-style: solid; padding: 5px">
+                    <p>Pressure : {{ api.data.iaqi.p.v }}</p> 
+                </div>
+                <div class="row" style="border: 1px; border-style: solid; padding: 5px">
+                    <p>Humidity : {{ api.data.iaqi.h.v }}</p> 
+                </div>
+                <div class="row" style="border: 1px; border-style: solid; padding: 5px">
+                    <p>Wind : {{ api.data.iaqi.w.v }}</p> 
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
