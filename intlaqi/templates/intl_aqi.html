@@ -16,16 +16,17 @@
         </form>
     </div>
 
-    {% if city %}
+    <!-- {% if city %}
         {{ city }}
-    {% endif %}
+    {% endif %} -->
 
+    {% if api != "Error: No data on city" %}
     <div style="margin-top: 10px">
         <!-- {{ api.data.iaqi }} -->
         <div class="row">
             <div class="col">
                 <div class="location">
-                    <div class="row">
+                    <div class="row" style="padding-right: 15px;">
                         <h3>{{ api.data.city.name }}</h3>
                     </div>
                 </div>
@@ -37,6 +38,12 @@
             </div>
 
             <div class="col">
+                <div class="row" style="border: 1px; border-style: solid; padding: 5px">
+                    <p>PM2.5 : {{ api.data.iaqi.pm25.v }}</p>
+                </div>
+                <div class="row" style="border: 1px; border-style: solid; padding: 5px">
+                    <p>PM10 : {{ api.data.iaqi.pm10.v }}</p>
+                </div>
                 <div class="row" style="border: 1px; border-style: solid; padding: 5px">
                     <p>O<sub>3</sub> : {{ api.data.iaqi.o3.v }}</p>
                 </div>
@@ -64,4 +71,24 @@
             </div>
         </div>
     </div>
+
+    {% else %}
+    <div style="margin-top: 10px">
+        <!-- {{ api.data.iaqi }} -->
+        <div class="row">
+            <div class="col">
+                <div class="location">
+                    <div class="row" style="padding-right: 15px;">
+                        <h3>{{ city }}</h3>
+                    </div>
+                </div>
+                <div class="data" style="margin-top: 10px;">
+                    <div class="row aqi_score" style="align-content: center;">
+                        <h1>AQI: {{ api }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}

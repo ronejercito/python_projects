@@ -10,24 +10,27 @@ def projects(request):
 def intl_aqi(request):
     import json
     import requests
+    import re
+    from urllib.request import urlopen
 
     if request.method == "POST":
         city = request.POST['city']
-        api_req = requests.get("https://api.waqi.info/feed/" + city + "/?token=7b8cc61eb74aee354c5818dfce380d7c9a3ca765")
 
-        try:
-            api = json.loads(api_req.content)
-        except Exception as e:
-            api = "Error: No data"
+    else:     
+        url = "http://ipinfo.io/json"
+        resp = urlopen(url)
+        jsondata = json.load(resp)
+        city = jsondata['city']
 
-        return render(request, 'intl_aqi.html', {'api' : api })
-        
-    else:        
-        api_req = requests.get("https://api.waqi.info/feed/santa%20rosa/?token=7b8cc61eb74aee354c5818dfce380d7c9a3ca765")
+    api_req = requests.get("https://api.waqi.info/feed/" + city + "/?token=7b8cc61eb74aee354c5818dfce380d7c9a3ca765")
 
-        try:
-            api = json.loads(api_req.content)
-        except Exception as e:
-            api = "Error: No data"
+    try:
+        api = json.loads(api_req.content)
 
-        return render(request, 'intl_aqi.html', {'api' : api })
+        if api['status'] == 'error':
+            api = "Error: No data on city"
+
+    except Exception as e:
+        api = "Error: No data on city"
+
+    return render(request, 'intl_aqi.html', {'api' : api })
